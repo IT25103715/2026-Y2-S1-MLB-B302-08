@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('My Account')}"></head>
+<body>
+<nav th:replace="~{fragments/layout :: navbar}"></nav>
+
+<main class="container my-4">
+    <div class="alert alert-danger" th:if="${errorMessage}" th:text="${errorMessage}">Error</div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h2 class="mb-4">My Account</h2>
+
+            <table class="table bg-white">
+                <tr><th>Name</th><td th:text="${user.name}">Name</td></tr>
+                <tr><th>Email</th><td th:text="${user.email}">Email</td></tr>
+                <tr><th>Phone</th><td th:text="${user.phone} ?: '-'">Phone</td></tr>
+                <tr><th>Address</th><td th:text="${user.address} ?: '-'">Address</td></tr>
+                <tr><th>Account status</th><td th:text="${user.status}">Status</td></tr>
+            </table>
+
+            <a class="btn btn-primary" th:href="@{/account/edit}">Edit Details</a>
+            <a class="btn btn-outline-primary" th:href="@{/payments}">My Payment History</a>
+
+            <hr class="my-4">
+            <h5>Danger zone</h5>
+            <form th:action="@{/account/deactivate}" method="post" class="d-inline" onsubmit="return confirm('Deactivate your account?');">
+                <button type="submit" class="btn btn-outline-warning">Deactivate Account</button>
+            </form>
+            <form th:action="@{/account/delete}" method="post" class="d-inline" onsubmit="return confirm('Permanently delete your account? This cannot be undone.');">
+                <button type="submit" class="btn btn-outline-danger">Delete Account</button>
+            </form>
+        </div>
+    </div>
+</main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
+</body>
+</html>
